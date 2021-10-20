@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,15 +19,13 @@ namespace sapr
         Graphics g;
         //  Pen pen;
         int numkers;
-        double scale = 1;
+        double scale = 32;
         SolidBrush br = new SolidBrush(Color.LightBlue);
         int lastx = -1;
         public Form1()
         {
             InitializeComponent();
             g = PbSyst.CreateGraphics();
-            //g = Pbsyst.CreateGraphics();
-            //   pen = new Pen(Color.Black);
             numkers = 0;
             CbNumKer.Items.Add(1);
             CbNumKer.SelectedIndex = 0;
@@ -44,23 +43,14 @@ namespace sapr
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            ToolStripMenuItemSol.Checked = true;
         }
 
         private void CbNumKer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (CbNumKer.Text)
             int numb = CbNumKer.SelectedIndex;
             if (numb != CbNumKer.Items.Count - 1)
-            {
                 select(numb);
-                //(string, string, string, string, string) data = logic.getdata(numb);
-                //TbLen.Text = data.Item1;
-                //TbAr.Text = data.Item2;
-                //TbEla.Text = data.Item3;
-                //TbVolt.Text = data.Item4;
-                //TbQ.Text = data.Item5;
-            }
         }
 
         private void ButAdd_Click(object sender, EventArgs e)
@@ -137,7 +127,7 @@ namespace sapr
             }
             CbNumKer.SelectedIndex = CbNumKer.Items.Count - 1;
             lbkers.Items.Clear();
-            lbkers.Visible = false;
+            showAll();
             Cbmove.Checked = false;
         }
         void drawWall(string str, int y, int x = 9)
@@ -204,14 +194,12 @@ namespace sapr
         void drawRect(int med, int prevX, int l, int a)
         {
             Pen pen = new Pen(Color.Black);
-            //  SolidBrush sbr = new SolidBrush(Color.LightGray);
             a /= 2;
             l += prevX;
             g.DrawLine(pen, prevX, med + a, prevX, med - a);
             g.DrawLine(pen, l, med + a, l, med - a);
             g.DrawLine(pen, prevX, med + a, l, med + a);
             g.DrawLine(pen, prevX, med - a, l, med - a);
-            //g.FillRectangle(sbr, )
         }
         void drawq(int med, int prevX, int l, int q)
         {
@@ -242,29 +230,19 @@ namespace sapr
         {
             if (f == 0)
                 return;
-            //  if (a < 5 && Math.Abs(l - prevX) < 10)
-            //      return;
             Pen pen = new Pen(Color.Blue);
             f /= Math.Abs(f);
             if (prevX == 0 && f < 0)
                 prevX = 10;
             if (str == "r" && f > 0)
                 prevX -= 10;
-            //    if (Math.Abs(l - prevX) < 10)
-            //    {
-            //         g.DrawLine(pen, prevX, med + 2 * f, l, med);
-            //         g.DrawLine(pen, prevX, med - 2 * f, l, med);
-            //     }
-            //   else
-            //  {
             g.DrawLine(pen, prevX, med + 2, prevX + 7 * f, med + 2);
             g.DrawLine(pen, prevX, med - 2, prevX + 7 * f, med - 2);
             g.DrawLine(pen, prevX + 10 * f, med, prevX + 5 * f, med + 5);
             g.DrawLine(pen, prevX + 10 * f, med, prevX + 5 * f, med - 5);
-            //   }
         }
         void draw()
-        {
+        {       
             g.Clear(Color.White);
             int med = PbSyst.Height / 2;
             if (logic.left)
@@ -307,57 +285,12 @@ namespace sapr
                 drawWall("r", med, (int)prevX+1);
             if (prevX - 20 > PbSyst.Width)
                 PbSyst.Width = (int)(prevX + 20);
-            if (prevX + 1000 < PbSyst.Width )
+            if (prevX + 1800 < PbSyst.Width )
                 PbSyst.Width = (int)(prevX + 100);
             g = PbSyst.CreateGraphics();
-
-            //int med = PbSyst.Size.Height / 2;
-            //(double, double, double) rect;
-            //double Q = 0;
-            //double prevX = 0;
-            //int nF = 0;
-            //double F = 0;
-            //int last=0;
-            //g.Clear(Color.White);
-            //Pbleft.CreateGraphics().Clear(Color.White);
-            //if (logic.hasEls())
-            //{
-            //    if (logic.left == true)
-            //        drowWall("l", med);
-            //    rect = logic.getFker();
-            //    rect.Item1 *= scale;
-            //    rect.Item2 *= scale;
-
-            //    if (logic.max() != 0)
-            //        drawf((int)prevX, (int)(logic.getKnotDouble(nF++)), med);
-            //    while (rect.Item1 > 0)
-            //    {
-            //        drawQ((int)prevX, (int)(rect.Item1 + prevX), rect.Item3, med);
-            //        g.DrawRectangle(pen, (int)prevX, (int)(med - rect.Item2 / 2), (int)(rect.Item1), (int)(rect.Item2));
-            //   //     if (PbSyst.Cursor.HotSpot.X > prevX && PbSyst.Cursor.HotSpot.X < prevX + rect.Item1)
-            //   //         g.FillRectangle(br, (int)prevX +1 , (int)(med - rect.Item2 / 2) + 1 , (int)(rect.Item1) -1, (int)(rect.Item2) -1);
-            //        prevX += rect.Item1;
-            //        rect = logic.getNextker();
-            //        rect.Item1 *= scale;
-            //        rect.Item2 *= scale;
-            //        drawf((int)prevX, (int)(logic.getKnotDouble(nF++)), med);
-            //        //antiscroll1.Visible = false;
-            //        //if (prevX < 500)
-            //        //    antiscroll1.Visible = true;
-            //        if (rect.Item2 > PbSyst.Height)
-            //            PbSyst.Height = (int)(rect.Item2 + 20);
-            //        if (rect.Item1 != -1)
-            //            last = (int)rect.Item1;
-            //    }
-
-            //    if (prevX + 10 + last > PbSyst.Width)
-            //        PbSyst.Width = (int)(prevX + rect.Item1 + 50);
-
-            //    g = PbSyst.CreateGraphics();
-            //    if (logic.right == true)
-            //        drowWall("r", med, (int)(prevX) + 1);
-            //}
         }
+
+
         private void ButDel_Click(object sender, EventArgs e)
         {
             if (logic.max() == 1)
@@ -386,7 +319,7 @@ namespace sapr
             }
             
             lbkers.Items.Clear();
-            lbkers.Visible = false;
+            showAll();
             Cbmove.Checked = false;
         }
 
@@ -477,11 +410,12 @@ namespace sapr
             }
             draw();
             CbNumKer.Items.Clear();
-            for (int i = 1; i < logic.max(); i++)
+            for (int i = 1; i <= logic.max()+1; i++)
             {
                 CbNumKer.Items.Add(i);
             }
-            CbNumKer.SelectedIndex = CbNumKer.Items.Count - 1;
+            CbNumKer.SelectedIndex = 0;
+            showAll();
         }
         private void CbNumKer_TextUpdate(object sender, EventArgs e)
         {
@@ -539,13 +473,6 @@ namespace sapr
             if (lastx != -1)
             {
                 select(lastx);
-                //CbNumKer.SelectedIndex = lastx;
-                //(string, string, string, string, string) data = logic.getdata(lastx);
-                //TbLen.Text = data.Item1;
-                //TbAr.Text = data.Item2;
-                //TbEla.Text = data.Item3;
-                //TbVolt.Text = data.Item4;
-                //TbQ.Text = data.Item5;
             }
         }
         void select(int number)
@@ -613,6 +540,11 @@ namespace sapr
 
         private void ButShowAll_Click(object sender, EventArgs e)
         {
+            showAll();
+        }
+
+        void showAll()
+        {
             lbkers.Items.Clear();
             if (logic.max() > 0)
                 lbkers.Visible = true;
@@ -620,7 +552,7 @@ namespace sapr
             int i = 0;
             foreach (var kernel in kers)
             {
-                string dataK = (i+1).ToString() + ") ";
+                string dataK = (i + 1).ToString() + ") ";
                 dataK += "L = " + kernel.L.ToString() + "M; ";
                 dataK += "A = " + kernel.A.ToString() + "M^2; ";
                 dataK += "E = " + kernel.E.ToString() + "MПa; ";
@@ -648,9 +580,43 @@ namespace sapr
 
         private void but_opengraf_Click(object sender, EventArgs e)
         {
-            //Application.Run(new FormGraf());
             FormGraf formGraf = new FormGraf();
-            formGraf.Show();    
+            formGraf.Show();
+            formGraf.getMatrix(logic.solveN(), logic.solveU(),logic.getL(), logic.max());
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+                FormSolve formSolve = new FormSolve();
+                formSolve.Show();
+                formSolve.getMatrix(logic.solveA(), logic.solveB(), logic.solve6(), logic.solveN(), logic.solveU(),logic.max());
+        }
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+        
+        }
+
+        private void antiscroll1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolStripMenuItemSol_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            FormTables formTables = new FormTables();
+            formTables.Show();
+            formTables.getMatrix(logic.solveN(), logic.solveU(), logic.getL(), logic.max());
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

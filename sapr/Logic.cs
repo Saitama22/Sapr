@@ -13,10 +13,11 @@ namespace sapr
         List<Kernel> ListKers = new List<Kernel>();
         List<Knot> ListKnots = new List<Knot>();
         public bool left { get; set; }
-        public bool right{ get; set; }
+        public bool right { get; set; }
         [NonSerialized]
         int curker;
-        public Logic() {
+        public Logic()
+        {
             curker = 0;
             left = false;
             right = false;
@@ -72,9 +73,9 @@ namespace sapr
         {
             if (num >= ListKers.Count)
                 return ("10", "10", "10", "10", "10");
-            return (ListKers[num].L.ToString(), 
-                ListKers[num].A.ToString(), 
-                ListKers[num].E.ToString(), 
+            return (ListKers[num].L.ToString(),
+                ListKers[num].A.ToString(),
+                ListKers[num].E.ToString(),
                 ListKers[num].V.ToString(),
                 ListKers[num].Q.ToString());
         }
@@ -120,6 +121,116 @@ namespace sapr
         {
             if (numb < ListKnots.Count && ListKnots.Count != 0)
                 ListKnots[numb].F = 0;
+        }
+
+
+
+
+        public double[] solveB()
+        {
+            double[] B = new double[ListKers.Count + 1];
+            for (int i = 0; i <= ListKers.Count; i++)
+            {                
+                B[i] += ListKnots[i].F;
+                if (i != 0)
+                    B[i] += ListKers[i - 1].Q * ListKers[i - 1].L / 2;
+                if (i != ListKers.Count)
+                    B[i] += ListKers[i].Q * ListKers[i].L / 2;
+            }
+            if (left == true)
+                B[0] = 0;
+            if (right == true)
+                B[ListKers.Count] = 0;
+            return B;
+        }
+        public double[,] solveA()
+        {
+            double[,] A = new double[ListKers.Count + 1, ListKers.Count + 1];
+            for (int i = 0; i < ListKers.Count + 1; i++)
+            {
+                for (int j = 0; j < ListKers.Count + 1; j++)
+                {
+                    A[i, j] = 0;
+                }
+            }
+            for (int i = 0; i < ListKers.Count; i++)
+            {
+                A[i, i] += ListKers[i].A * ListKers[i].E / ListKers[i].L;
+                A[i, i + 1] -= ListKers[i].A * ListKers[i].E / ListKers[i].L;
+                A[i + 1, i] -= ListKers[i].A * ListKers[i].E / ListKers[i].L;
+                A[i + 1, i + 1] += ListKers[i].A * ListKers[i].E / ListKers[i].L;
+            }
+            if (left == true)
+            {
+                A[0, 0] = 1;
+                A[1, 0] = 0;
+                A[0, 1] = 0;
+            }
+            if (right == true)
+            {
+                A[ListKers.Count, ListKers.Count] = 1;
+                A[ListKers.Count - 1, ListKers.Count] = 0;
+                A[ListKers.Count, ListKers.Count - 1] = 0;
+            }
+            return A;
+        }
+
+        public double[] solve6()
+        {
+            double[,] A = new double[ListKers.Count + 1, ListKers.Count + 1];
+            double[] B = new double[ListKers.Count + 1];
+            A =solveA();
+            B = solveB();
+            A = Auxil.inversion(A, ListKers.Count + 1);
+            return Auxil.VecMatMul(A, B, ListKers.Count + 1);
+        }
+
+        public double[,] solveN()
+        {
+            double[,] A = new double[ListKers.Count + 1, ListKers.Count + 1];
+            double[] B = new double[ListKers.Count + 1];
+            A = solveA();
+            B = solveB();
+            A = Auxil.inversion(A, ListKers.Count + 1);
+            double[] v6 = Auxil.VecMatMul(A, B, ListKers.Count + 1);
+            double[,] N = new double[ListKers.Count, 2];
+            for (int i = 0; i < ListKers.Count; i++)
+            {
+                N[i, 0] = (ListKers[i].A * ListKers[i].E / ListKers[i].L) * (v6[i + 1] - v6[i]);
+                if (ListKers[i].Q!=0)
+                {
+                    N[i, 0] += (ListKers[i].Q * ListKers[i].L /2);
+                    N[i, 1] -= ListKers[i].Q;
+                }                
+            }
+            return N;
+        }
+        public double[,] solveU()
+        {
+            double[,] A = new double[ListKers.Count + 1, ListKers.Count + 1];
+            double[] B = new double[ListKers.Count + 1];
+            A = solveA();
+            B = solveB();
+            A = Auxil.inversion(A, ListKers.Count + 1);
+            double[] v6 = Auxil.VecMatMul(A, B, ListKers.Count + 1);
+            double[,] U = new double[ListKers.Count, 3];
+            for (int i = 0; i < ListKers.Count; i++)
+            {
+                U[i, 0] = v6[i];
+                U[i, 1] = (v6[i + 1] - v6[i]) / ListKers[i].L;
+                U[i, 1] += (ListKers[i].Q * ListKers[i].L) / (2 * ListKers[i].E * ListKers[i].A);
+                U[i, 2] = -(ListKers[i].Q / (2 * ListKers[i].E * ListKers[i].A)); 
+            }
+            return U;
+        }
+        public double[] getL()
+        {
+            double[] arrL = new double[ListKers.Count];
+            for (int i = 0; i < ListKers.Count; i++)
+            {
+                arrL[i] = ListKers[i].L;
+            }
+            return arrL;
         }
     }
 }

@@ -64,6 +64,8 @@ namespace sapr
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.проектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemSol = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Pbleft = new System.Windows.Forms.PictureBox();
             this.PbSyst = new System.Windows.Forms.PictureBox();
@@ -75,6 +77,8 @@ namespace sapr
             this.label15 = new System.Windows.Forms.Label();
             this.Cbmove = new System.Windows.Forms.CheckBox();
             this.but_opengraf = new System.Windows.Forms.Button();
+            this.butSolve = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Pbleft)).BeginInit();
@@ -88,7 +92,7 @@ namespace sapr
             this.TbLen.Name = "TbLen";
             this.TbLen.Size = new System.Drawing.Size(74, 20);
             this.TbLen.TabIndex = 0;
-            this.TbLen.Text = "100";
+            this.TbLen.Text = "1";
             this.TbLen.TextChanged += new System.EventHandler(this.TbLen_TextChanged);
             // 
             // TbAr
@@ -97,7 +101,7 @@ namespace sapr
             this.TbAr.Name = "TbAr";
             this.TbAr.Size = new System.Drawing.Size(66, 20);
             this.TbAr.TabIndex = 1;
-            this.TbAr.Text = "100";
+            this.TbAr.Text = "1";
             this.TbAr.TextChanged += new System.EventHandler(this.TbAr_TextChanged);
             // 
             // TbEla
@@ -107,7 +111,7 @@ namespace sapr
             this.TbEla.Name = "TbEla";
             this.TbEla.Size = new System.Drawing.Size(69, 20);
             this.TbEla.TabIndex = 2;
-            this.TbEla.Text = "10";
+            this.TbEla.Text = "1";
             this.TbEla.TextChanged += new System.EventHandler(this.TbEla_TextChanged);
             // 
             // TbVolt
@@ -116,7 +120,7 @@ namespace sapr
             this.TbVolt.Name = "TbVolt";
             this.TbVolt.Size = new System.Drawing.Size(49, 20);
             this.TbVolt.TabIndex = 3;
-            this.TbVolt.Text = "10";
+            this.TbVolt.Text = "1";
             this.TbVolt.TextChanged += new System.EventHandler(this.TbVolt_TextChanged);
             // 
             // ButAdd
@@ -361,12 +365,14 @@ namespace sapr
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.проектToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1164, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1219, 24);
             this.menuStrip1.TabIndex = 29;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
@@ -392,6 +398,22 @@ namespace sapr
             this.OpenToolStripMenuItem.Text = "Открыть";
             this.OpenToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
+            // проектToolStripMenuItem
+            // 
+            this.проектToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemSol});
+            this.проектToolStripMenuItem.Name = "проектToolStripMenuItem";
+            this.проектToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.проектToolStripMenuItem.Text = "Проект";
+            // 
+            // ToolStripMenuItemSol
+            // 
+            this.ToolStripMenuItemSol.CheckOnClick = true;
+            this.ToolStripMenuItemSol.Name = "ToolStripMenuItemSol";
+            this.ToolStripMenuItemSol.Size = new System.Drawing.Size(184, 22);
+            this.ToolStripMenuItemSol.Text = "Показывать расчет?";
+            this.ToolStripMenuItemSol.Click += new System.EventHandler(this.ToolStripMenuItemSol_Click);
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -400,12 +422,13 @@ namespace sapr
             this.flowLayoutPanel1.Controls.Add(this.Pbleft);
             this.flowLayoutPanel1.Controls.Add(this.PbSyst);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(26, 140);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(34, 143);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(683, 318);
             this.flowLayoutPanel1.TabIndex = 30;
             this.flowLayoutPanel1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flowLayoutPanel1_Scroll);
+            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // Pbleft
             // 
@@ -430,11 +453,12 @@ namespace sapr
             // 
             // antiscroll1
             // 
-            this.antiscroll1.Location = new System.Drawing.Point(26, 461);
+            this.antiscroll1.Location = new System.Drawing.Point(34, 464);
             this.antiscroll1.Name = "antiscroll1";
             this.antiscroll1.Size = new System.Drawing.Size(346, 16);
             this.antiscroll1.TabIndex = 31;
             this.antiscroll1.TabStop = false;
+            this.antiscroll1.Click += new System.EventHandler(this.antiscroll1_Click);
             // 
             // scalepl
             // 
@@ -501,20 +525,45 @@ namespace sapr
             // 
             // but_opengraf
             // 
-            this.but_opengraf.Location = new System.Drawing.Point(26, 562);
+            this.but_opengraf.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.but_opengraf.Location = new System.Drawing.Point(131, 483);
             this.but_opengraf.Name = "but_opengraf";
-            this.but_opengraf.Size = new System.Drawing.Size(89, 48);
+            this.but_opengraf.Size = new System.Drawing.Size(97, 51);
             this.but_opengraf.TabIndex = 38;
-            this.but_opengraf.Text = "открыть график";
+            this.but_opengraf.Text = "Графики";
             this.but_opengraf.UseVisualStyleBackColor = true;
             this.but_opengraf.Click += new System.EventHandler(this.but_opengraf_Click);
+            // 
+            // butSolve
+            // 
+            this.butSolve.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.butSolve.Location = new System.Drawing.Point(26, 483);
+            this.butSolve.Name = "butSolve";
+            this.butSolve.Size = new System.Drawing.Size(97, 51);
+            this.butSolve.TabIndex = 39;
+            this.butSolve.Text = "Расчеты";
+            this.butSolve.UseVisualStyleBackColor = true;
+            this.butSolve.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(234, 484);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 48);
+            this.button1.TabIndex = 40;
+            this.button1.Text = "Таблицы";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1164, 609);
+            this.ClientSize = new System.Drawing.Size(1219, 755);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.butSolve);
             this.Controls.Add(this.but_opengraf);
             this.Controls.Add(this.Cbmove);
             this.Controls.Add(this.label15);
@@ -616,6 +665,10 @@ namespace sapr
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox Cbmove;
         private System.Windows.Forms.Button but_opengraf;
+        private System.Windows.Forms.Button butSolve;
+        private System.Windows.Forms.ToolStripMenuItem проектToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSol;
+        private System.Windows.Forms.Button button1;
     }
 }
 
