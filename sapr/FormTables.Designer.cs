@@ -32,16 +32,21 @@ namespace sapr
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.CbstepU = new System.Windows.Forms.ComboBox();
             this.tableN = new System.Windows.Forms.DataGridView();
             this.tableU = new System.Windows.Forms.DataGridView();
             this.CbstepN = new System.Windows.Forms.ComboBox();
             this.UdU = new System.Windows.Forms.NumericUpDown();
             this.UdN = new System.Windows.Forms.NumericUpDown();
+            this.table6 = new System.Windows.Forms.DataGridView();
+            this.Ud6 = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Cbstep6 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.tableN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tableU)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UdU)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UdN)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.table6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Ud6)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -71,19 +76,6 @@ namespace sapr
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 6;
-            // 
-            // CbstepU
-            // 
-            this.CbstepU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CbstepU.FormattingEnabled = true;
-            this.CbstepU.Items.AddRange(new object[] {
-            "Шаг:",
-            "Шагов:"});
-            this.CbstepU.Location = new System.Drawing.Point(452, 15);
-            this.CbstepU.Name = "CbstepU";
-            this.CbstepU.Size = new System.Drawing.Size(69, 21);
-            this.CbstepU.TabIndex = 7;
-            this.CbstepU.SelectedIndexChanged += new System.EventHandler(this.CbstepU_SelectedIndexChanged);
             // 
             // tableN
             // 
@@ -119,9 +111,6 @@ namespace sapr
             // 
             this.CbstepN.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CbstepN.FormattingEnabled = true;
-            this.CbstepN.Items.AddRange(new object[] {
-            "Шаг:",
-            "Шагов:"});
             this.CbstepN.Location = new System.Drawing.Point(122, 11);
             this.CbstepN.Name = "CbstepN";
             this.CbstepN.Size = new System.Drawing.Size(69, 21);
@@ -154,17 +143,67 @@ namespace sapr
             0});
             this.UdN.ValueChanged += new System.EventHandler(this.UdN_ValueChanged);
             // 
+            // table6
+            // 
+            this.table6.AllowUserToAddRows = false;
+            this.table6.AllowUserToDeleteRows = false;
+            this.table6.AllowUserToOrderColumns = true;
+            this.table6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.table6.ColumnHeadersVisible = false;
+            this.table6.Location = new System.Drawing.Point(734, 38);
+            this.table6.Name = "table6";
+            this.table6.ReadOnly = true;
+            this.table6.RowHeadersVisible = false;
+            this.table6.ShowEditingIcon = false;
+            this.table6.Size = new System.Drawing.Size(196, 508);
+            this.table6.TabIndex = 47;
+            // 
+            // Ud6
+            // 
+            this.Ud6.Location = new System.Drawing.Point(867, 11);
+            this.Ud6.Name = "Ud6";
+            this.Ud6.Size = new System.Drawing.Size(63, 20);
+            this.Ud6.TabIndex = 48;
+            this.Ud6.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(728, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 31);
+            this.label4.TabIndex = 49;
+            this.label4.Text = "σ";
+            // 
+            // Cbstep6
+            // 
+            this.Cbstep6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Cbstep6.FormattingEnabled = true;
+            this.Cbstep6.Location = new System.Drawing.Point(792, 10);
+            this.Cbstep6.Name = "Cbstep6";
+            this.Cbstep6.Size = new System.Drawing.Size(69, 21);
+            this.Cbstep6.TabIndex = 50;
+            this.Cbstep6.SelectedIndexChanged += new System.EventHandler(this.Cbstep6_SelectedIndexChanged);
+            // 
             // FormTables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 622);
+            this.ClientSize = new System.Drawing.Size(1026, 612);
+            this.Controls.Add(this.Cbstep6);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Ud6);
+            this.Controls.Add(this.table6);
             this.Controls.Add(this.UdN);
             this.Controls.Add(this.UdU);
             this.Controls.Add(this.CbstepN);
             this.Controls.Add(this.tableU);
             this.Controls.Add(this.tableN);
-            this.Controls.Add(this.CbstepU);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -175,6 +214,8 @@ namespace sapr
             ((System.ComponentModel.ISupportInitialize)(this.tableU)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UdU)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UdN)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.table6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Ud6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,11 +225,14 @@ namespace sapr
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox CbstepU;
         private System.Windows.Forms.DataGridView tableN;
         private System.Windows.Forms.DataGridView tableU;
         private System.Windows.Forms.ComboBox CbstepN;
         private System.Windows.Forms.NumericUpDown UdU;
         private System.Windows.Forms.NumericUpDown UdN;
+        private System.Windows.Forms.DataGridView table6;
+        private System.Windows.Forms.NumericUpDown Ud6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox Cbstep6;
     }
 }

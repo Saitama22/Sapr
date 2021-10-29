@@ -413,6 +413,7 @@ namespace sapr
             for (int i = 1; i <= logic.max()+1; i++)
             {
                 CbNumKer.Items.Add(i);
+                CbKnot.Items.Add(i);
             }
             CbNumKer.SelectedIndex = 0;
             showAll();
@@ -582,7 +583,7 @@ namespace sapr
         {
             FormGraf formGraf = new FormGraf();
             formGraf.Show();
-            formGraf.getMatrix(logic.solveN(), logic.solveU(),logic.getL(), logic.max());
+            formGraf.getMatrix(logic.solveN(), logic.solveU(),logic.getL(), logic.getA(), logic.max());
 
         }
 
@@ -611,10 +612,15 @@ namespace sapr
         {
             FormTables formTables = new FormTables();
             formTables.Show();
-            formTables.getMatrix(logic.solveN(), logic.solveU(), logic.getL(), logic.max());
+            formTables.getMatrix(logic.solveN(), logic.solveU(), logic.getL(), logic.getA(), logic.get6(),logic.max());
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }

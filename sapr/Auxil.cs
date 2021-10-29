@@ -125,6 +125,8 @@ namespace sapr
         }
         public static string optstr(string str)
         {
+            if (str.Length < 3)
+                return str;
             if (str[str.Length - 3] == '0')
             {
                 str = str.Remove(str.Length - 3, 1);

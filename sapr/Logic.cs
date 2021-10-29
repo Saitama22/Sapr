@@ -126,23 +126,7 @@ namespace sapr
 
 
 
-        public double[] solveB()
-        {
-            double[] B = new double[ListKers.Count + 1];
-            for (int i = 0; i <= ListKers.Count; i++)
-            {                
-                B[i] += ListKnots[i].F;
-                if (i != 0)
-                    B[i] += ListKers[i - 1].Q * ListKers[i - 1].L / 2;
-                if (i != ListKers.Count)
-                    B[i] += ListKers[i].Q * ListKers[i].L / 2;
-            }
-            if (left == true)
-                B[0] = 0;
-            if (right == true)
-                B[ListKers.Count] = 0;
-            return B;
-        }
+        
         public double[,] solveA()
         {
             double[,] A = new double[ListKers.Count + 1, ListKers.Count + 1];
@@ -175,11 +159,29 @@ namespace sapr
             return A;
         }
 
+        public double[] solveB()
+        {
+            double[] B = new double[ListKers.Count + 1];
+            for (int i = 0; i <= ListKers.Count; i++)
+            {
+                B[i] += ListKnots[i].F;
+                if (i != 0)
+                    B[i] += ListKers[i - 1].Q * ListKers[i - 1].L / 2;
+                if (i != ListKers.Count)
+                    B[i] += ListKers[i].Q * ListKers[i].L / 2;
+            }
+            if (left == true)
+                B[0] = 0;
+            if (right == true)
+                B[ListKers.Count] = 0;
+            return B;
+        }
+
         public double[] solve6()
         {
             double[,] A = new double[ListKers.Count + 1, ListKers.Count + 1];
             double[] B = new double[ListKers.Count + 1];
-            A =solveA();
+            A = solveA();
             B = solveB();
             A = Auxil.inversion(A, ListKers.Count + 1);
             return Auxil.VecMatMul(A, B, ListKers.Count + 1);
@@ -223,6 +225,25 @@ namespace sapr
             }
             return U;
         }
+        public double[] getA()
+        {
+            double[] a = new double[max()];
+            for (int i = 0; i < max(); i++)
+            {
+                a[i] = ListKers[i].A;
+            }
+            return a;
+        }
+        public double[] get6()
+        {
+            double[] x = new double[max()];
+            for (int i = 0; i < max(); i++)
+            {
+                x[i] = ListKers[i].V;
+            }
+            return x;
+        }
+
         public double[] getL()
         {
             double[] arrL = new double[ListKers.Count];
